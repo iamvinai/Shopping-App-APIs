@@ -1,4 +1,4 @@
-package ecommerce.app.dto;
+package ecommerce.app.payload;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
