@@ -1,5 +1,7 @@
 package ecommerce.app.payload;
 
+import java.util.List;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -10,8 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CategoryDTO {
-    Long id;
+    private Long id;
     @NotBlank
     @Size(min = 5, message = "Name must be at least 5 characters long")
-    String name;
+    private String name;
+    private List<ProductDTO> products;
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import ecommerce.app.payload.APIResponse;
+import jakarta.validation.ConstraintViolationException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -26,6 +27,15 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(errorMap,HttpStatus.BAD_REQUEST);//400 Bad Request errorMap;
     }
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Map<String,String>>handleConstraintViolationException(ConstraintViolationException ex){
+        Map<String,String> errorMap = new HashMap<>();
+        ex.getConstraintViolations().forEach(error->{
+            errorMap.put(error.getPropertyPath().toString(),error.getMessage());
+        });
+
+        return new ResponseEntity<>(errorMap,HttpStatus.BAD_REQUEST);//400 Bad Request errorMap;
+    }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<APIResponse> handleResourceNotFoundException(ResourceNotFoundException ex){
@@ -33,8 +43,14 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(apiResponse,HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(CategoryExistsException.class)
-    public ResponseEntity<APIResponse> CategoryExistsException(CategoryExistsException ex){
+    @ExceptionHandler(ResourceExistsException.class)
+    public ResponseEntity<APIResponse> ResourceExistsException(ResourceExistsException ex){
+        APIResponse apiResponse = new APIResponse(ex.getMessage(),false);
+        return new ResponseEntity<>(apiResponse,HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NoDataPresentException.class)
+    public ResponseEntity<APIResponse> DataNotPredent(NoDataPresentException ex){
         APIResponse apiResponse = new APIResponse(ex.getMessage(),false);
         return new ResponseEntity<>(apiResponse,HttpStatus.BAD_REQUEST);
     }

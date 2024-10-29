@@ -11,7 +11,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import ecommerce.app.Repositories.CategoryRepository;
-import ecommerce.app.exceptions.CategoryExistsException;
+import ecommerce.app.exceptions.NoDataPresentException;
+import ecommerce.app.exceptions.ResourceExistsException;
 import ecommerce.app.exceptions.ResourceNotFoundException;
 import ecommerce.app.model.Category;
 import ecommerce.app.payload.CategoryDTO;
@@ -26,6 +27,16 @@ public class CategoryServiceImpl implements CategoryService {
         this.modelMapper = modelMapper;
         this.categoryRepository = categoryRepository;
     }
+/**
+ * Retrieves a paginated, sorted list of categories.
+ *
+ * @param pageNumber the page number to retrieve (zero-based)
+ * @param pageSize the number of categories per page
+ * @param sortBy the field by which to sort the categories
+ * @param sortOrder the order of sorting: "asc" for ascending, "desc" for descending
+ * @return a CategoryResponse containing the list of categories and pagination details
+ * @throws NoDataPresentException if no categories are available
+ */
     @Override
     public CategoryResponse getCategories(Integer pageNumber,Integer pageSize, String sortBy, String sortOrder) {
         Sort sort = Sort.by("asc".equalsIgnoreCase(sortOrder) ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy);
@@ -34,7 +45,7 @@ public class CategoryServiceImpl implements CategoryService {
         Page<Category> categoriesPage = categoryRepository.findAll(pageable);
         List<Category> categories = categoriesPage.getContent();
         if(categories.isEmpty()){
-            throw new ResourceNotFoundException("No category found");
+            throw new NoDataPresentException("Category");
         }
         List<CategoryDTO> categoryDTOs = categories.stream().map(category -> modelMapper.map(category,CategoryDTO.class)).toList();
         CategoryResponse  categoryResponse = new CategoryResponse();
@@ -51,7 +62,7 @@ public class CategoryServiceImpl implements CategoryService {
     public void createCategories(CategoryDTO categoryDTO) {
         Optional<Category> category2 = Optional.ofNullable(categoryRepository.findByName(categoryDTO.getName()));
         if(category2.isPresent()){
-            throw new CategoryExistsException(categoryDTO.getName(),"name");
+            throw new ResourceExistsException("Category",categoryDTO.getName());
         }
         Category category = modelMapper.map(categoryDTO,Category.class);
         categoryRepository.save(category);
