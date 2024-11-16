@@ -1,4 +1,4 @@
-package ecommerce.app.controllers;
+package ecommerce.app.Controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ecommerce.app.config.AppContants;
+import ecommerce.app.Configurations.AppContants;
 import ecommerce.app.payload.CategoryDTO;
 import ecommerce.app.payload.CategoryResponse;
 import ecommerce.app.services.CategoryServiceImpl;

@@ -34,5 +34,8 @@ public class Product {
             CascadeType.MERGE,})
     @JoinColumn(name = "category_id")
     private Category category;
+    @ManyToOne
+    @JoinColumn(name = "seller_id")
+    private Users user;
 
 }

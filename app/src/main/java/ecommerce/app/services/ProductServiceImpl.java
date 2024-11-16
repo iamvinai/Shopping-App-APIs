@@ -14,11 +14,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import ecommerce.app.Repositories.CategoryRepository;
-import ecommerce.app.Repositories.ProductRepository;
-import ecommerce.app.exceptions.NoDataPresentException;
-import ecommerce.app.exceptions.ResourceExistsException;
-import ecommerce.app.exceptions.ResourceNotFoundException;
+import ecommerce.app.Configurations.AppContants;
+import ecommerce.app.Data.CategoryRepository;
+import ecommerce.app.Data.ProductRepository;
+import ecommerce.app.Err.NoDataPresentException;
+import ecommerce.app.Err.ResourceExistsException;
+import ecommerce.app.Err.ResourceNotFoundException;
 import ecommerce.app.model.Category;
 import ecommerce.app.model.Product;
 import ecommerce.app.payload.ProductDTO;
@@ -44,12 +45,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDTO addProduct(ProductDTO productDTO, Long categoryId) {
         Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(()->new ResourceNotFoundException("Category","id",categoryId));
+                .orElseThrow(()->new ResourceNotFoundException(AppContants.CATEGORY_TABLE,"id",categoryId));
         Product product = modelMapper.map(productDTO,Product.class);
         List<Product> productsListed = category.getProducts();
         productsListed.forEach(productListed -> {
             if(productListed.getName().equals(product.getName())){
-                throw new ResourceExistsException("Product",product.getName());
+                throw new ResourceExistsException(AppContants.PRODUCT_TABLE,product.getName());
             }
         });
         product.setCategory(category);
@@ -57,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
         double discount = productDTO.getDiscount();
         double finalPrice = calculateFinalPrice(currentPrice,discount);
         product.setFinalPrice(finalPrice);
-        product.setImage("default.png");
+        product.setImage(AppContants.DEFAULT_IMAGE);
         category.getProducts().add(product);
         categoryRepository.save(category);
         Product savedProduct = productRepository.save(product);
@@ -70,13 +71,13 @@ public class ProductServiceImpl implements ProductService {
     }
     @Override
     public ProductResponse getAllProducts(Integer pageNumber,Integer pageSize, String sortBy, String sortOrder) {
-        Sort sort = Sort.by("asc".equalsIgnoreCase(sortOrder) ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy);
+        Sort sort = Sort.by(AppContants.ASC_ORDER.equalsIgnoreCase(sortOrder) ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy);
         //sort = sort.reverse();
         Pageable pageable = PageRequest.of(pageNumber, pageSize,sort);
         Page<Product> productsPage = productRepository.findAll(pageable);
         List<Product> products = productsPage.getContent();
         if(products.isEmpty()) {
-            throw new NoDataPresentException("Product");
+            throw new NoDataPresentException(AppContants.PRODUCT_TABLE);
         }
         List<ProductDTO> productDTOs = products.stream().map(product->modelMapper.map(product,ProductDTO.class)).toList();
         ProductResponse productResponse = new ProductResponse();
@@ -90,13 +91,13 @@ public class ProductServiceImpl implements ProductService {
     }
     @Override
     public ProductResponse findByCategoryId(Long categoryId,Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
-        Sort pageSort = Sort.by("asc".equalsIgnoreCase(sortOrder) ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy);
+        Sort pageSort = Sort.by(AppContants.ASC_ORDER.equalsIgnoreCase(sortOrder) ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy);
         Pageable pageable = PageRequest.of(pageNumber, pageSize,pageSort);
         Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(()->new ResourceNotFoundException("Category","id",categoryId));
+                .orElseThrow(()->new ResourceNotFoundException(AppContants.CATEGORY_TABLE,"id",categoryId));
         Page<Product> productsPage = productRepository.findByCategoryIdOrderByPriceAsc(category.getId(),pageable);
         if(productsPage.isEmpty()) {
-            throw new NoDataPresentException("Product");
+            throw new NoDataPresentException(AppContants.PRODUCT_TABLE);
         }
         List<Product> products = productsPage.getContent();
         List<ProductDTO> productDTOs = products.stream().map(product -> modelMapper.map(product,ProductDTO.class)).toList();
@@ -120,7 +121,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDTO updateProduct(ProductDTO productDTO, Long productId) {
         Product existingProduct = productRepository.findById(productId)
-                                .orElseThrow(()-> new ResourceNotFoundException("Product","id",productId));
+                                .orElseThrow(()-> new ResourceNotFoundException(AppContants.PRODUCT_TABLE,"id",productId));
         existingProduct.setName(null!=productDTO.getName()?productDTO.getName():existingProduct.getName());
         existingProduct.setPrice(-1.0<productDTO.getPrice()?productDTO.getPrice():existingProduct.getPrice());
         existingProduct.setDiscount(-1.0<productDTO.getDiscount() && 100>=productDTO.getDiscount()?productDTO.getDiscount():existingProduct.getDiscount());
@@ -138,14 +139,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDTO deleteProduct(Long productId) {
         Product product = productRepository.findById(productId)
-                    .orElseThrow(()-> new ResourceNotFoundException("Product","id",productId));
+                    .orElseThrow(()-> new ResourceNotFoundException(AppContants.PRODUCT_TABLE,"id",productId));
         productRepository.delete(product);
         return modelMapper.map(product,ProductDTO.class);
     }
     @Override
     public ProductDTO updateProductImage(Long productId, MultipartFile image) throws IllegalStateException, IOException {
         Product productFromDB = productRepository.findById(productId)
-                    .orElseThrow(()-> new ResourceNotFoundException("Product","id",productId));
+                    .orElseThrow(()-> new ResourceNotFoundException(AppContants.PRODUCT_TABLE,"id",productId));
         
         String fileName = fileService.uploadImageToServer(path,image);
         productFromDB.setImage(fileName);

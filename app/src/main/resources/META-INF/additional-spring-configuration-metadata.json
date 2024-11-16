@@ -1,5 +1,22 @@
-{"properties": [{
-  "name": "project.image",
-  "type": "java.lang.String",
-  "description": "A description for 'project.image'"
-}]}
+{"properties": [
+  {
+    "name": "project.image",
+    "type": "java.lang.String",
+    "description": "A description for 'project.image'"
+  },
+  {
+    "name": "spring.app.jwtExpirationMs",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.app.jwtExpirationMs'"
+  },
+  {
+    "name": "spring.app.jwtSecret",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.app.jwtSecret'"
+  } ,
+  {
+    "name": "spring.app.jwtCookie",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.app.jwtCookie'"
+  }
+]}

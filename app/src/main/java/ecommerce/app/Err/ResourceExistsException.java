@@ -1,4 +1,4 @@
-package ecommerce.app.exceptions;
+package ecommerce.app.Err;
 
 public class ResourceExistsException extends RuntimeException{
 

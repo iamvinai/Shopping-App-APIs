@@ -1,4 +1,4 @@
-package ecommerce.app.Repositories;
+package ecommerce.app.Data;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

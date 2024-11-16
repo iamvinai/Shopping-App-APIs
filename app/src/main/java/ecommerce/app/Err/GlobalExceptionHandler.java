@@ -1,4 +1,4 @@
-package ecommerce.app.exceptions;
+package ecommerce.app.Err;
 
 import java.util.Map;
 import java.util.HashMap;

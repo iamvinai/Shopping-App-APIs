@@ -10,10 +10,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import ecommerce.app.Repositories.CategoryRepository;
-import ecommerce.app.exceptions.NoDataPresentException;
-import ecommerce.app.exceptions.ResourceExistsException;
-import ecommerce.app.exceptions.ResourceNotFoundException;
+import ecommerce.app.Configurations.AppContants;
+import ecommerce.app.Data.CategoryRepository;
+import ecommerce.app.Err.NoDataPresentException;
+import ecommerce.app.Err.ResourceExistsException;
+import ecommerce.app.Err.ResourceNotFoundException;
 import ecommerce.app.model.Category;
 import ecommerce.app.payload.CategoryDTO;
 import ecommerce.app.payload.CategoryResponse;
@@ -39,13 +40,13 @@ public class CategoryServiceImpl implements CategoryService {
  */
     @Override
     public CategoryResponse getCategories(Integer pageNumber,Integer pageSize, String sortBy, String sortOrder) {
-        Sort sort = Sort.by("asc".equalsIgnoreCase(sortOrder) ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy);
+        Sort sort = Sort.by(AppContants.ASC_ORDER.equalsIgnoreCase(sortOrder) ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy);
         //sort = sort.reverse();
         Pageable pageable = PageRequest.of(pageNumber, pageSize,sort);
         Page<Category> categoriesPage = categoryRepository.findAll(pageable);
         List<Category> categories = categoriesPage.getContent();
         if(categories.isEmpty()){
-            throw new NoDataPresentException("Category");
+            throw new NoDataPresentException(AppContants.CATEGORY_TABLE);
         }
         List<CategoryDTO> categoryDTOs = categories.stream().map(category -> modelMapper.map(category,CategoryDTO.class)).toList();
         CategoryResponse  categoryResponse = new CategoryResponse();
@@ -62,7 +63,7 @@ public class CategoryServiceImpl implements CategoryService {
     public void createCategories(CategoryDTO categoryDTO) {
         Optional<Category> category2 = Optional.ofNullable(categoryRepository.findByName(categoryDTO.getName()));
         if(category2.isPresent()){
-            throw new ResourceExistsException("Category",categoryDTO.getName());
+            throw new ResourceExistsException(AppContants.CATEGORY_TABLE,categoryDTO.getName());
         }
         Category category = modelMapper.map(categoryDTO,Category.class);
         categoryRepository.save(category);
@@ -72,7 +73,7 @@ public class CategoryServiceImpl implements CategoryService {
     public String deleteCategories(Long id) {
         Optional<Category> optionalCategory = categoryRepository.findById(id);
         Category savedCategory = optionalCategory
-                                .orElseThrow(() ->new ResourceNotFoundException("Category","id",id));
+                                .orElseThrow(() ->new ResourceNotFoundException(AppContants.CATEGORY_TABLE,"id",id));
         categoryRepository.delete(savedCategory);
        return "Category deleted successfully";
     }
@@ -81,7 +82,7 @@ public class CategoryServiceImpl implements CategoryService {
     public String updateCategories(Long id,CategoryDTO categoryDTOUpdate) {
         Optional<Category> optionalCategory = categoryRepository.findById(id);
         Category savedCategory = optionalCategory
-                                .orElseThrow(() ->new ResourceNotFoundException("Category","id",id));
+                                .orElseThrow(() ->new ResourceNotFoundException(AppContants.CATEGORY_TABLE,"id",id));
         savedCategory.setName(categoryDTOUpdate.getName());
         categoryRepository.save(savedCategory);
         return "Updated successfully";
