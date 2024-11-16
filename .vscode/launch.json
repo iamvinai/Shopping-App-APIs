@@ -8,6 +8,9 @@
             "mainClass": "ecommerce.app.AppApplication",
             "projectName": "app",
             "args": "",
+            "env": {
+            "JWT_KEY" : "mySecretKey123912738aopsgjnspkmndfsopkvajoirjg94gf2opfng2moknm"
+        },
             "envFile": "${workspaceFolder}/.env"
         }
     ]
