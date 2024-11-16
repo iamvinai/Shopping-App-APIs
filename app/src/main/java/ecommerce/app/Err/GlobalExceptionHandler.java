@@ -1,4 +1,4 @@
-package ecommerce.app.Err;
+package ecommerce.app.err;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import ecommerce.app.payload.APIResponse;
+import ecommerce.app.res.APIResponse;
 import jakarta.validation.ConstraintViolationException;
 
 @RestControllerAdvice

@@ -1,4 +1,4 @@
-package ecommerce.app.Controllers;
+package ecommerce.app.controllers;
 
 
 import java.util.HashMap;
@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ecommerce.app.Data.RoleRepository;
-import ecommerce.app.Data.UserRepository;
+import ecommerce.app.data.RoleRepository;
+import ecommerce.app.data.UserRepository;
 import ecommerce.app.model.AppRoles;
 import ecommerce.app.model.Roles;
 import ecommerce.app.model.Users;

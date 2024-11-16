@@ -1,4 +1,4 @@
-package ecommerce.app.payload;
+package ecommerce.app.res;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

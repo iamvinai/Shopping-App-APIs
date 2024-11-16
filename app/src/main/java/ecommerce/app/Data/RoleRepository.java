@@ -1,4 +1,4 @@
-package ecommerce.app.Data;
+package ecommerce.app.data;
 
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package ecommerce.app.Err;
+package ecommerce.app.err;
 
 
 public class NoDataPresentException extends RuntimeException {

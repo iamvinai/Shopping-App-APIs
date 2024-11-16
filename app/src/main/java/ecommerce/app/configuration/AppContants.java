@@ -1,4 +1,4 @@
-package ecommerce.app.Configurations;
+package ecommerce.app.configuration;
 
 public class AppContants {
 

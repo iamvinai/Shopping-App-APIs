@@ -1,4 +1,4 @@
-package ecommerce.app.Configurations;
+package ecommerce.app.configuration;
 
 import java.util.Set;
 
@@ -17,8 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import ecommerce.app.Data.RoleRepository;
-import ecommerce.app.Data.UserRepository;
+import ecommerce.app.data.RoleRepository;
+import ecommerce.app.data.UserRepository;
 import ecommerce.app.model.AppRoles;
 import ecommerce.app.model.Roles;
 import ecommerce.app.model.Users;

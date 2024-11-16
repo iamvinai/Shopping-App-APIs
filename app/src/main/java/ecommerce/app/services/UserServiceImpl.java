@@ -8,8 +8,8 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ecommerce.app.Data.RolesRepository;
-import ecommerce.app.Data.UserRepository;
+import ecommerce.app.data.RolesRepository;
+import ecommerce.app.data.UserRepository;
 import ecommerce.app.model.AppRoles;
 import ecommerce.app.model.Roles;
 import ecommerce.app.model.Users;

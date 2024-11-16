@@ -1,4 +1,4 @@
-package ecommerce.app.Controllers;
+package ecommerce.app.controllers;
 
 import java.io.IOException;
 
@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import ecommerce.app.Configurations.AppContants;
-import ecommerce.app.payload.ProductDTO;
-import ecommerce.app.payload.ProductResponse;
+import ecommerce.app.res.ProductDTO;
+import ecommerce.app.res.ProductResponse;
+import ecommerce.app.configuration.AppContants;
 import ecommerce.app.services.ProductService;
 import jakarta.validation.Valid;
 

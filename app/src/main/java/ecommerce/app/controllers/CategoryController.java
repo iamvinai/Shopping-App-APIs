@@ -1,4 +1,4 @@
-package ecommerce.app.Controllers;
+package ecommerce.app.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import ecommerce.app.Configurations.AppContants;
-import ecommerce.app.payload.CategoryDTO;
-import ecommerce.app.payload.CategoryResponse;
+import ecommerce.app.configuration.AppContants;
+import ecommerce.app.res.CategoryDTO;
+import ecommerce.app.res.CategoryResponse;
 import ecommerce.app.services.CategoryServiceImpl;
 import jakarta.validation.Valid;
 @RestController

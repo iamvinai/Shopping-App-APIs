@@ -1,4 +1,4 @@
-package ecommerce.app.payload;
+package ecommerce.app.res;
 import java.util.List;
 
 import lombok.AllArgsConstructor;

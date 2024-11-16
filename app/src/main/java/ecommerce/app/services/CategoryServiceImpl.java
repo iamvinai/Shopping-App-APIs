@@ -10,14 +10,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import ecommerce.app.Configurations.AppContants;
-import ecommerce.app.Data.CategoryRepository;
-import ecommerce.app.Err.NoDataPresentException;
-import ecommerce.app.Err.ResourceExistsException;
-import ecommerce.app.Err.ResourceNotFoundException;
+import ecommerce.app.configuration.AppContants;
+import ecommerce.app.data.CategoryRepository;
+import ecommerce.app.err.NoDataPresentException;
+import ecommerce.app.err.ResourceExistsException;
+import ecommerce.app.err.ResourceNotFoundException;
 import ecommerce.app.model.Category;
-import ecommerce.app.payload.CategoryDTO;
-import ecommerce.app.payload.CategoryResponse;
+import ecommerce.app.res.CategoryDTO;
+import ecommerce.app.res.CategoryResponse;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 

@@ -1,11 +1,11 @@
 package ecommerce.app.services;
 
-import ecommerce.app.payload.ProductDTO;
-import ecommerce.app.payload.ProductResponse;
-
 import java.io.IOException;
 
 import org.springframework.web.multipart.MultipartFile;
+
+import ecommerce.app.res.ProductDTO;
+import ecommerce.app.res.ProductResponse;
 public interface ProductService {
 
     public ProductDTO addProduct(ProductDTO productDTO, Long categoryId);

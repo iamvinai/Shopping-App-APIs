@@ -1,4 +1,4 @@
-package ecommerce.app.Controllers;
+package ecommerce.app.controllers;
 
 import java.util.List;
 

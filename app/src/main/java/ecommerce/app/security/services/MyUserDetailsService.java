@@ -7,8 +7,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import ecommerce.app.Data.UserRepository;
 import ecommerce.app.model.Users;
+import ecommerce.app.data.UserRepository;
 import jakarta.transaction.Transactional;
 
 @Service

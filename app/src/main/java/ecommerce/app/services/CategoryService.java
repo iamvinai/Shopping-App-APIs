@@ -1,7 +1,7 @@
 package ecommerce.app.services;
 
-import ecommerce.app.payload.CategoryDTO;
-import ecommerce.app.payload.CategoryResponse;
+import ecommerce.app.res.CategoryDTO;
+import ecommerce.app.res.CategoryResponse;
 
 public interface CategoryService {
     CategoryResponse getCategories(Integer pageNumber,Integer pageSize, String sortBy,String sortOrder);

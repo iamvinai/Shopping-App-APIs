@@ -1,10 +1,6 @@
 
 
-Based on the code snippets you provided earlier, I've studied the project and identified the controllers and APIs. Here is the corrected README file with the APIs:
-
-**E-Commerce API**
-
-A RESTful API for managing products and categories.
+**E-Commerce Application README**
 
 **Table of Contents**
 
@@ -13,30 +9,39 @@ A RESTful API for managing products and categories.
 * [Technology Stack](#technology-stack)
 * [Getting Started](#getting-started)
 * [API Endpoints](#api-endpoints)
+* [Controllers](#controllers)
+* [Services](#services)
+* [Data Access](#data-access)
+* [Security](#security)
+* [Error Handling](#error-handling)
 * [Contributing](#contributing)
 
 **Introduction**
 
-This API provides a simple and intuitive way to manage products and categories for an e-commerce platform. It is built using Java and Spring Boot, and uses a MySQL database for data storage.
+This is an e-commerce application built using Java and Spring Boot. It provides a simple and intuitive way to manage products, categories, users, and roles.
 
 **Features**
 
 * Product management: create, read, update, and delete products
 * Category management: create, read, update, and delete categories
+* User management: create, read, update, and delete users
+* Role management: create, read, update, and delete roles
+* Authentication and authorization using JSON Web Tokens (JWT)
 
 **Technology Stack**
 
 * Java 8
 * Spring Boot 2.x
 * MySQL 5.x
+* Maven
 
 **Getting Started**
 
-To run the API, follow these steps:
+To run the application, follow these steps:
 
 1. Clone the repository to your local machine.
 2. Install the required dependencies using Maven.
-3. Start the API using the `mvn spring-boot:run` command.
+3. Start the application using the `mvn spring-boot:run` command.
 4. Use a tool like Postman or cURL to test the API endpoints.
 
 **API Endpoints**
@@ -53,6 +58,53 @@ To run the API, follow these steps:
 	+ `GET /public/categories/{id}`: Get a category by ID.
 	+ `PUT /public/categories/{id}`: Update a category.
 	+ `DELETE /public/categories/{id}`: Delete a category.
+* **User Controller**
+	+ `POST /public/users`: Create a new user.
+	+ `GET /public/users`: Get a list of all users.
+	+ `GET /public/users/{id}`: Get a user by ID.
+	+ `PUT /public/users/{id}`: Update a user.
+	+ `DELETE /public/users/{id}`: Delete a user.
+* **Role Controller**
+	+ `POST /public/roles`: Create a new role.
+	+ `GET /public/roles`: Get a list of all roles.
+	+ `GET /public/roles/{id}`: Get a role by ID.
+	+ `PUT /public/roles/{id}`: Update a role.
+	+ `DELETE /public/roles/{id}`: Delete a role.
+* **Auth Controller**
+	+ `POST /public/auth/login`: Login a user.
+	+ `POST /public/auth/register`: Register a new user.
+
+**Controllers**
+
+* `ProductController`: Handles product-related requests.
+* `CategoryController`: Handles category-related requests.
+* `UserController`: Handles user-related requests.
+* `RoleController`: Handles role-related requests.
+* `AuthController`: Handles authentication-related requests.
+
+**Services**
+
+* `ProductService`: Provides business logic for product-related operations.
+* `CategoryService`: Provides business logic for category-related operations.
+* `UserService`: Provides business logic for user-related operations.
+* `RoleService`: Provides business logic for role-related operations.
+
+**Data Access**
+
+* `ProductRepository`: Provides data access for products.
+* `CategoryRepository`: Provides data access for categories.
+* `UserRepository`: Provides data access for users.
+* `RoleRepository`: Provides data access for roles.
+
+**Security**
+
+* Authentication and authorization using JSON Web Tokens (JWT)
+* Password encryption using BCrypt
+
+**Error Handling**
+
+* Global exception handler for handling errors and exceptions
+* Custom error messages for better error handling
 
 **Contributing**
 
