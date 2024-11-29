@@ -16,6 +16,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -23,6 +24,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
@@ -69,7 +71,12 @@ public class Users {
             inverseJoinColumns = @JoinColumn(name = "address_id"))
             @JsonProperty
     private List<Addresses> addresses;
+    @ToString.Exclude
     @OneToMany(mappedBy = "user",cascade = {CascadeType.PERSIST,CascadeType.MERGE},
     orphanRemoval = true,fetch = FetchType.EAGER)
     private Set<Product> products;
+    @ToString.Exclude
+    @OneToOne(mappedBy = "user",cascade = {CascadeType.PERSIST,CascadeType.MERGE},orphanRemoval = true,fetch = FetchType.EAGER)
+    private Cart cart;
+
 }

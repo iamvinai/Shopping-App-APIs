@@ -42,6 +42,11 @@ public class GlobalExceptionHandler {
         APIResponse apiResponse = new APIResponse(ex.getMessage(),false);
         return new ResponseEntity<>(apiResponse,HttpStatus.NOT_FOUND);
     }
+     @ExceptionHandler(CustomException.class)
+    public ResponseEntity<APIResponse> handleCustomException(CustomException ex){
+        APIResponse apiResponse = new APIResponse(ex.getMessage(),false);
+        return new ResponseEntity<>(apiResponse,HttpStatus.NOT_FOUND);
+    }
 
     @ExceptionHandler(ResourceExistsException.class)
     public ResponseEntity<APIResponse> ResourceExistsException(ResourceExistsException ex){

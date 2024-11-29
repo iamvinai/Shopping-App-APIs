@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import ecommerce.app.configuration.AppContants;
+import ecommerce.app.data.CartRepository;
 import ecommerce.app.data.CategoryRepository;
 import ecommerce.app.data.ProductRepository;
 import ecommerce.app.err.NoDataPresentException;
@@ -22,6 +23,8 @@ import ecommerce.app.err.ResourceExistsException;
 import ecommerce.app.err.ResourceNotFoundException;
 import ecommerce.app.model.Category;
 import ecommerce.app.model.Product;
+import ecommerce.app.model.Cart;
+import ecommerce.app.model.CartItems;
 import ecommerce.app.res.ProductDTO;
 import ecommerce.app.res.ProductResponse;
 
@@ -31,6 +34,8 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private CartRepository cartRepository;
     @Autowired
     private CategoryRepository categoryRepository;
 
@@ -122,6 +127,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO updateProduct(ProductDTO productDTO, Long productId) {
         Product existingProduct = productRepository.findById(productId)
                                 .orElseThrow(()-> new ResourceNotFoundException(AppContants.PRODUCT_TABLE,"id",productId));
+        Double oldPrice = existingProduct.getPrice();
         existingProduct.setName(null!=productDTO.getName()?productDTO.getName():existingProduct.getName());
         existingProduct.setPrice(-1.0<productDTO.getPrice()?productDTO.getPrice():existingProduct.getPrice());
         existingProduct.setDiscount(-1.0<productDTO.getDiscount() && 100>=productDTO.getDiscount()?productDTO.getDiscount():existingProduct.getDiscount());
@@ -131,8 +137,20 @@ public class ProductServiceImpl implements ProductService {
             double finalPrice = calculateFinalPrice(currentPrice,discount);
             existingProduct.setFinalPrice(finalPrice);
         }
-        existingProduct.setQuantity(null!=productDTO.getQuantity()?productDTO.getQuantity():existingProduct.getQuantity());     
+        existingProduct.setQuantity(0!=productDTO.getQuantity()?productDTO.getQuantity():existingProduct.getQuantity());     
         Product savedProduct =  productRepository.save(existingProduct);
+        List<Cart> carts = cartRepository.findCartByProductId(savedProduct.getId())
+        .orElseThrow(()-> new ResourceNotFoundException(AppContants.CART_TABLE,"productId",savedProduct.getId()));
+        carts.forEach(cart -> {
+            double totalAmount = 0.0;
+            int countOfItems=0;
+            for(CartItems cartItem : cart.getCart_items()) {
+                    totalAmount += (cartItem.getProduct().getPrice() * cartItem.getQuantity());
+                    countOfItems+=existingProduct.getId().equals(cartItem.getProduct().getId())?cartItem.getQuantity():1;
+            }
+            cart.setTotalPrice(cart.getTotalPrice() - oldPrice*countOfItems + totalAmount);
+            cartRepository.save(cart);
+        });
         ProductDTO productDTOSaved = modelMapper.map(savedProduct,ProductDTO.class);
         return productDTOSaved;
     }

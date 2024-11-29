@@ -1,17 +1,22 @@
 package ecommerce.app.model;
 
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor
@@ -29,7 +34,7 @@ public class Product {
     private double discount;
     private double finalPrice;
     private String image;
-    private String quantity;
+    private Integer quantity;
     @ManyToOne(cascade = {CascadeType.PERSIST,
             CascadeType.MERGE,})
     @JoinColumn(name = "category_id")
@@ -37,5 +42,8 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "seller_id")
     private Users user;
+    @ToString.Exclude
+    @OneToMany(mappedBy = "product",cascade = {CascadeType.PERSIST,CascadeType.MERGE},fetch = FetchType.EAGER)
+    private List<CartItems> cart_items;
 
 }
