@@ -59,10 +59,6 @@ public class ProductServiceImpl implements ProductService {
             }
         });
         product.setCategory(category);
-        double currentPrice = productDTO.getPrice();
-        double discount = productDTO.getDiscount();
-        double finalPrice = calculateFinalPrice(currentPrice,discount);
-        product.setFinalPrice(finalPrice);
         product.setImage(AppContants.DEFAULT_IMAGE);
         category.getProducts().add(product);
         categoryRepository.save(category);
@@ -131,12 +127,6 @@ public class ProductServiceImpl implements ProductService {
         existingProduct.setName(null!=productDTO.getName()?productDTO.getName():existingProduct.getName());
         existingProduct.setPrice(-1.0<productDTO.getPrice()?productDTO.getPrice():existingProduct.getPrice());
         existingProduct.setDiscount(-1.0<productDTO.getDiscount() && 100>=productDTO.getDiscount()?productDTO.getDiscount():existingProduct.getDiscount());
-        if(productDTO.getDiscount()<=100 || productDTO.getDiscount()>=0) {
-            double currentPrice = productDTO.getPrice();
-            double discount = productDTO.getDiscount();
-            double finalPrice = calculateFinalPrice(currentPrice,discount);
-            existingProduct.setFinalPrice(finalPrice);
-        }
         existingProduct.setQuantity(0!=productDTO.getQuantity()?productDTO.getQuantity():existingProduct.getQuantity());     
         Product savedProduct =  productRepository.save(existingProduct);
         List<Cart> carts = cartRepository.findCartByProductId(savedProduct.getId())

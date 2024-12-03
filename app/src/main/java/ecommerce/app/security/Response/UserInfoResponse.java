@@ -3,9 +3,6 @@ package ecommerce.app.security.Response;
 import java.util.List;
 
 
-
-
-
 public class UserInfoResponse {
 
     private Long id;

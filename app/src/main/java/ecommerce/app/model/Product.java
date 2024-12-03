@@ -32,7 +32,6 @@ public class Product {
     private String description;
     private double price;
     private double discount;
-    private double finalPrice;
     private String image;
     private Integer quantity;
     @ManyToOne(cascade = {CascadeType.PERSIST,

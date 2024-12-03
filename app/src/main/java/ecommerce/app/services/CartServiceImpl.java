@@ -64,7 +64,7 @@ public class CartServiceImpl implements CartService {
         cartItem.setProduct(product);
         cartItem.setQuantity(quantity);
         cartItem.setDiscount(product.getDiscount());
-        cartItem.setFinalPrice(product.getPrice());
+        cartItem.setPrice(product.getPrice());
         cartItemsRepository.save(cartItem);
         if(cart.getCart_items() == null) {
             List<CartItems> cartItems = new ArrayList<>();
@@ -163,7 +163,7 @@ public class CartServiceImpl implements CartService {
         if(cartItem.getQuantity() + quantity > product.getQuantity()) {
             throw new CustomException(AppContants.PRODUCT_TABLE, ": Only "+product.getQuantity()+" units of " +product.getName()+" available");
         }
-        cartItem.setFinalPrice(product.getFinalPrice());
+        cartItem.setPrice(product.getPrice());
         cartItem.setQuantity(cartItem.getQuantity() + quantity);
         cartItem.setDiscount(product.getDiscount());
         cart.setTotalPrice(cart.getTotalPrice() + (cartItem.getProduct().getPrice() * quantity));
