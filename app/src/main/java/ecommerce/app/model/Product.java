@@ -35,7 +35,7 @@ public class Product {
     private String image;
     private Integer quantity;
     @ManyToOne(cascade = {CascadeType.PERSIST,
-            CascadeType.MERGE,})
+            CascadeType.MERGE})
     @JoinColumn(name = "category_id")
     private Category category;
     @ManyToOne

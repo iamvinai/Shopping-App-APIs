@@ -24,6 +24,7 @@ public class AuthUtils {
 
     public Users getLoggedInUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("getLoggedInUser: "+authentication.getName());
         Users user = userRepository.findByUsername(authentication.getName())
             .orElseThrow(()-> new ResourceNotFoundException(AppContants.USER_TABLE,"username",authentication.getName()));
         return user;

@@ -12,5 +12,6 @@ public class AppContants {
     public static final String CATEGORY_TABLE = "Category";
     public static final String CART_TABLE = "Cart";
     public static final String CART_ITEM_TABLE = "Cart Item";
-    public static final String USER_TABLE = null;
+    public static final String USER_TABLE = "Users";
+    public static final String ADDRESS_TABLE = "Address";
 }

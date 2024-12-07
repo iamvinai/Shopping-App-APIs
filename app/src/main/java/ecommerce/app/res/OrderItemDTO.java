@@ -1,5 +1,7 @@
 package ecommerce.app.res;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,12 +9,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CartItemsDTO {
+public class OrderItemDTO {
 
-    private Long cartItemId;
-    private CartDTO cartDTO;
-    private ProductDTO productDTO;
+    private Long id;
+    private ProductDTO product;
+    @JsonIgnore
+    private OrderDTO order;
     private Integer quantity;
+    private Double priceAfterDiscount;
     private Double discount;
-    private Double price;
 }

@@ -72,7 +72,8 @@ public class SecurityConfiguration {
                                             .requestMatchers("/images/**").permitAll()
                                             .requestMatchers("/v3/appi-docs/**").permitAll()
                                             .requestMatchers("/h2-console/**").permitAll()
-                                            .anyRequest().authenticated());
+                                            .anyRequest().authenticated()
+                                            );
         httpSecurity.authenticationProvider(authenticationProvider());
         httpSecurity.headers(headers->headers.frameOptions(frame->frame.sameOrigin()));
         httpSecurity.addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);

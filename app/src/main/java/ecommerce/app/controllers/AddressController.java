@@ -42,7 +42,7 @@ public class AddressController {
         List<AddressDTO> addresses = addressService.getAddresses(user);
         return new ResponseEntity<List<AddressDTO>>(addresses, HttpStatus.OK);
     }
-    @GetMapping("/getAddressById/{addressId}")
+    @GetMapping("/address/{addressId}")
     public ResponseEntity<AddressDTO> getAddresses(@PathVariable Long addressId) {
         AddressDTO address = addressService.getAddressesById(addressId);
         return new ResponseEntity<AddressDTO>(address, HttpStatus.OK);

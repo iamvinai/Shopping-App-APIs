@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode.Exclude;
 
 @Entity
 @Table(name = "cart")
@@ -27,6 +28,7 @@ public class Cart {
     private Long id;
     @OneToOne
     @JoinColumn(name = "user_id")
+    @Exclude
     private Users user;
     @OneToMany(mappedBy = "cart",cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE},orphanRemoval = true)
     private List<CartItems> cart_items;
